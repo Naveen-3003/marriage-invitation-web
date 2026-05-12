@@ -1,26 +1,30 @@
 /* =============================================
    WEDDING INVITE PAGE — ROMANTIC PINK THEME
+   Performance-optimized, scroll-snap focused
    ============================================= */
 
 /* ===== SCROLL SNAP CONTAINER ===== */
 .invite-scroll-container {
   scroll-snap-type: y mandatory;
-  overflow-y: auto;
+  overflow-y: scroll;
   height: 100vh;
-  scroll-behavior: smooth;
+  height: 100dvh;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
 .invite-snap-section {
   scroll-snap-align: start;
-  min-height: 100vh;
-  min-height: 100dvh;
+  scroll-snap-stop: always;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   padding: 2rem 1rem;
+  overflow: hidden;
 }
 
 @media (min-width: 640px) {
@@ -36,7 +40,8 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: pink-shimmer 4s ease-in-out infinite;
+  animation: pink-shimmer 6s ease-in-out infinite;
+  will-change: background-position;
 }
 
 .pink-gradient-text-soft {
@@ -45,7 +50,8 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: pink-shimmer 5s ease-in-out infinite;
+  animation: pink-shimmer 7s ease-in-out infinite;
+  will-change: background-position;
 }
 
 @keyframes pink-shimmer {
@@ -54,40 +60,11 @@
   100% { background-position: 0% 50%; }
 }
 
-/* ===== GLOW EFFECTS ===== */
-@keyframes pink-glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 107, 157, 0.3),
-                0 0 40px rgba(255, 107, 157, 0.1);
-  }
-  50% {
-    box-shadow: 0 0 35px rgba(255, 107, 157, 0.5),
-                0 0 70px rgba(255, 107, 157, 0.2),
-                0 0 100px rgba(255, 64, 129, 0.1);
-  }
-}
-
-@keyframes text-glow-pink {
-  0%, 100% {
-    text-shadow: 0 0 20px rgba(255, 107, 157, 0.4),
-                 0 0 40px rgba(255, 107, 157, 0.15);
-  }
-  50% {
-    text-shadow: 0 0 30px rgba(255, 107, 157, 0.7),
-                 0 0 60px rgba(255, 107, 157, 0.3),
-                 0 0 90px rgba(255, 64, 129, 0.15);
-  }
-}
-
-@keyframes float-gentle {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-/* ===== HERO IMAGE GLOW ===== */
+/* ===== STATIC GLOW EFFECTS (no animation) ===== */
 .hero-image-glow {
-  animation: pink-glow-pulse 3s ease-in-out infinite;
   border: 2px solid rgba(255, 107, 157, 0.3);
+  box-shadow: 0 0 20px rgba(255, 107, 157, 0.2),
+              0 0 40px rgba(255, 107, 157, 0.08);
 }
 
 /* ===== SECTION DIVIDER ===== */
@@ -105,14 +82,12 @@
   );
 }
 
-/* ===== CARD STYLES ===== */
+/* ===== CARD STYLES (no backdrop-filter) ===== */
 .invite-card {
   background: linear-gradient(
-    145deg, rgba(30, 5, 15, 0.9), rgba(50, 10, 25, 0.7), rgba(30, 5, 15, 0.9)
+    145deg, rgba(30, 5, 15, 0.92), rgba(50, 10, 25, 0.8), rgba(30, 5, 15, 0.92)
   );
   border: 1px solid rgba(255, 107, 157, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 /* ===== MAP CONTAINER ===== */
@@ -120,39 +95,54 @@
   border: 2px solid rgba(255, 107, 157, 0.3);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(255, 107, 157, 0.15);
+  box-shadow: 0 8px 32px rgba(255, 107, 157, 0.12);
 }
 
-/* ===== COUPLE NAMES GLOW ===== */
+/* ===== COUPLE NAME GLOW (static, no animation) ===== */
 .couple-name-glow {
-  animation: text-glow-pink 3s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(255, 107, 157, 0.4),
+               0 0 40px rgba(255, 107, 157, 0.15);
 }
 
 /* ===== PARENT IMAGE ===== */
 .parent-image-ring {
   border: 3px solid rgba(255, 107, 157, 0.35);
-  box-shadow: 0 0 25px rgba(255, 107, 157, 0.15), 0 8px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 0 20px rgba(255, 107, 157, 0.1), 0 8px 24px rgba(0,0,0,0.25);
 }
 
-/* ===== HEARTBEAT ===== */
+/* ===== HEARTBEAT (lightweight) ===== */
 @keyframes heartbeat {
   0%, 100% { transform: scale(1); }
-  14% { transform: scale(1.15); }
+  14% { transform: scale(1.1); }
   28% { transform: scale(1); }
-  42% { transform: scale(1.1); }
+  42% { transform: scale(1.05); }
   56% { transform: scale(1); }
 }
 
 .heartbeat-animation {
-  animation: heartbeat 1.5s ease-in-out infinite;
+  animation: heartbeat 2s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* ===== SCROLL INDICATOR ===== */
 @keyframes scroll-bounce {
-  0%, 100% { transform: translateY(0); opacity: 0.6; }
-  50% { transform: translateY(8px); opacity: 1; }
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(6px); opacity: 0.9; }
 }
 
 .scroll-indicator {
-  animation: scroll-bounce 2s ease-in-out infinite;
+  animation: scroll-bounce 2.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* ===== SCROLLBAR for invite page ===== */
+.invite-scroll-container::-webkit-scrollbar {
+  width: 4px;
+}
+.invite-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.invite-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 157, 0.3);
+  border-radius: 2px;
 }

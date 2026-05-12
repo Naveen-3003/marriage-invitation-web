@@ -131,17 +131,18 @@ export default function ConclusionSection() {
         </motion.div>
 
         <motion.p
-          className="mt-3 text-[10px] tracking-[0.25em] uppercase"
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            color: "rgba(255,182,206,0.25)",
-          }}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          With Best Compliments from Friends & Relatives
-        </motion.p>
+  className="mt-4 text-xs sm:text-sm tracking-[0.18em] uppercase"
+  style={{
+    fontFamily: "'Cormorant Garamond', serif",
+    color: "rgba(255, 228, 236, 0.85)", // 🔥 FIXED VISIBILITY
+    textShadow: "0 0 6px rgba(255, 182, 206, 0.25)", // ✨ soft glow
+  }}
+  initial={{ opacity: 0, y: 10 }}
+  animate={isInView ? { opacity: 1, y: 0 } : {}}
+  transition={{ duration: 0.6, delay: 1.2 }}
+>
+  With Best Compliments from Friends & Relatives
+</motion.p>
       </div>
     </section>
   );
