@@ -1,18 +1,18 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 
 export default function ParentsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
-  const fadeUp = {
+  const fadeUp: Variants = {
     hidden: { opacity: 0, y: 60 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, delay: i * 0.2, ease: [0.4, 0, 0.2, 1] },
+      transition: { duration: 0.8, delay: i * 0.2, ease: "easeOut" },
     }),
   };
 
