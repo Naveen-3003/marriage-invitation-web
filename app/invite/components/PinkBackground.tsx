@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import "../bg-animations.css";
 
 interface Particle {
@@ -12,6 +12,12 @@ interface Particle {
 }
 
 export default function PinkBackground() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Generate particles once, no re-render needed
   const particles = useMemo<Particle[]>(
     () =>
@@ -44,7 +50,7 @@ export default function PinkBackground() {
       />
 
       {/* Floating hearts — reduced count */}
-      {particles.map((p) => (
+      {mounted && particles.map((p) => (
         <div
           key={p.id}
           className="heart-particle"
