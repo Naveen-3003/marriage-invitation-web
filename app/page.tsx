@@ -1,65 +1,92 @@
+"use client";
+
+import { useRef, useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import CloudHero from "./components/CloudHero";
+import TempleSection from "./components/TempleSection";
+import Birds from "./components/Birds";
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const templeRef = useRef<HTMLDivElement>(null);
+
+  const [showGuide, setShowGuide] = useState(false);
+
+  useEffect(() => {
+    // Check if we are already in fullscreen. If not, show the guide.
+    if (!document.fullscreenElement && typeof document.documentElement.requestFullscreen === 'function') {
+      setShowGuide(true);
+    }
+  }, []);
+
+  const handleFullscreenInteraction = () => {
+    if (!document.fullscreenElement && typeof document.documentElement.requestFullscreen === 'function') {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.log(`Fullscreen error: ${err.message}`);
+      });
+    }
+    setShowGuide(false); // Hide guide once they tap
+  };
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // Global Parallax for sky background
+  const skyY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
+
+  const handleScrollToTemple = () => {
+    templeRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main ref={containerRef} className="relative w-full overflow-hidden">
+      {/* Fullscreen Interaction Guide Overlay */}
+      {showGuide && (
+        <div 
+          onClick={handleFullscreenInteraction}
+          className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center cursor-pointer"
+        >
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], y: [0, -10, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            className="text-white text-6xl mb-6"
+          >
+            👆
+          </motion.div>
+          <p className="text-white text-xl md:text-2xl tracking-[0.1em] text-center px-6" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+            Tap anywhere to view this page clearly
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      )}
+
+      {/* Global Background Sky */}
+      <div className="fixed inset-0 z-0 pointer-events-none w-full h-[150vh]">
+        <motion.div 
+          className="relative w-full h-full"
+          style={{ y: skyY }}
+        >
+          <Image 
+            src="/natural_sky.png" 
+            alt="Natural Sky Background" 
+            fill
+            priority
+            className="object-cover"
+          />
+        </motion.div>
+      </div>
+
+      <div className="relative z-10 w-full">
+      <Birds count={8} />
+
+      {/* Section 1: Cloud Sky + Wedding Invitation heading */}
+      <CloudHero onScrollToTemple={handleScrollToTemple} />
+
+      {/* Section 2: Temple emerging on scroll + entry interaction */}
+      <TempleSection ref={templeRef} />
+      </div>
+    </main>
   );
 }

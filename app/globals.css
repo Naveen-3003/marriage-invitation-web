@@ -1,26 +1,173 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-gold: #D4A853;
+  --color-gold-light: #F0D68A;
+  --color-gold-dark: #B8860B;
+  --color-maroon: #800020;
+  --color-maroon-dark: #4A0012;
+  --color-maroon-light: #A0324F;
+  --color-temple-bg: #1A0A0A;
+  --color-cream: #FFF8E7;
+  --color-saffron: #FF6F00;
+  --font-cursive: 'Great Vibes', cursive;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-tamil: 'Noto Serif Tamil', serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #f0f8ff;
+  --foreground: #2d4a22;
+}
+
+/* ===== BASE STYLES ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Cormorant Garamond', serif;
+  overflow-x: hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f0f8ff;
+}
+::-webkit-scrollbar-thumb {
+  background: #4a6d33;
+  border-radius: 3px;
+}
+
+/* ===== CLOUD ANIMATIONS ===== */
+@keyframes cloud-drift-1 {
+  0%   { transform: translateX(-10%) translateY(0); }
+  50%  { transform: translateX(5%) translateY(-8px); }
+  100% { transform: translateX(-10%) translateY(0); }
+}
+@keyframes cloud-drift-2 {
+  0%   { transform: translateX(10%) translateY(0); }
+  50%  { transform: translateX(-8%) translateY(6px); }
+  100% { transform: translateX(10%) translateY(0); }
+}
+@keyframes cloud-drift-3 {
+  0%   { transform: translateX(0%) translateY(0); }
+  50%  { transform: translateX(12%) translateY(-5px); }
+  100% { transform: translateX(0%) translateY(0); }
+}
+@keyframes cloud-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+.cloud-layer-1 { animation: cloud-drift-1 25s ease-in-out infinite; }
+.cloud-layer-2 { animation: cloud-drift-2 30s ease-in-out infinite; }
+.cloud-layer-3 { animation: cloud-drift-3 20s ease-in-out infinite; }
+
+/* ===== GOLDEN PARTICLES ===== */
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  50% {
+    transform: translateY(-200px) translateX(30px) scale(1.5);
+    opacity: 0.6;
+  }
+  90% { opacity: 0; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(212, 168, 83, 0.3); }
+  50%      { box-shadow: 0 0 40px rgba(212, 168, 83, 0.6), 0 0 60px rgba(212, 168, 83, 0.2); }
+}
+
+@keyframes text-glow {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(212, 168, 83, 0.5), 0 0 40px rgba(212, 168, 83, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(212, 168, 83, 0.8), 0 0 60px rgba(212, 168, 83, 0.4), 0 0 80px rgba(212, 168, 83, 0.1);
+  }
+}
+
+@keyframes door-glow {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.15); }
+}
+
+/* ===== GRADIENT TEXT ===== */
+.gradient-text {
+  background: linear-gradient(135deg, #D4A853, #FF6F00, #F0D68A, #D4A853);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+/* ===== MODAL OVERLAY ===== */
+.modal-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ===== PAGE TRANSITION ===== */
+.page-transition-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ===== ENTER BUTTON ===== */
+.enter-btn {
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.enter-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 40px rgba(212, 168, 83, 0.4), 0 0 80px rgba(212, 168, 83, 0.15);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .music-toggle {
+    bottom: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@keyframes wind-effect {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wind {
+  transform-origin: bottom center;
+  animation: wind-effect 4s ease-in-out infinite;
 }
