@@ -1,0 +1,15 @@
+/* Lightweight background particle animation */
+@keyframes floating-heart {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 0.4; }
+  85% { opacity: 0.4; }
+  100% { transform: translateY(-110vh) scale(1.1); opacity: 0; }
+}
+
+.heart-particle {
+  position: absolute;
+  bottom: -5%;
+  animation: floating-heart linear infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
