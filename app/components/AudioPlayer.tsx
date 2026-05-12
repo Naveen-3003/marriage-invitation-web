@@ -9,12 +9,16 @@ export default function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_40df0d6801.mp3?filename=indian-classical-flute-114421.mp3");
+    audioRef.current = new Audio("/audio/audio-for-web.mp3");
     audioRef.current.loop = true;
     audioRef.current.volume = 0.3;
 
-    // Optional: auto-play on load (might be blocked by browser policy)
-    // audioRef.current.play().catch(() => console.log("Autoplay prevented"));
+    // Attempt auto-play on load
+    audioRef.current.play().then(() => {
+      setIsPlaying(true);
+    }).catch(() => {
+      console.log("Autoplay prevented by browser policy");
+    });
 
     return () => {
       if (audioRef.current) {

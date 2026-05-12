@@ -71,17 +71,7 @@ export default function CoupleIntroSection() {
         />
 
         <motion.div className="flex flex-col gap-4 pb-4" {...fadeUp(0.4)} animate={show(0.4)}>
-          <div className="invite-card rounded-2xl p-5 border border-pink-900/30 shadow-lg">
-            <p className="text-sm sm:text-base uppercase tracking-[0.25em] font-bold mb-2" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ff6b9d" }}>
-              {weddingData.muhurtham.tamilTitle} • {weddingData.muhurtham.title}
-            </p>
-            <p className="text-xl sm:text-2xl font-bold mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ffffff" }}>
-              {weddingData.muhurtham.date}
-            </p>
-            <p className="text-base sm:text-lg font-medium" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ffb3c6" }}>
-              {weddingData.muhurtham.time}
-            </p>
-          </div>
+
 
           <div className="invite-card rounded-2xl p-5 border border-pink-900/30 shadow-lg">
             <p className="text-sm sm:text-base uppercase tracking-[0.25em] font-bold mb-2" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ff6b9d" }}>
@@ -92,6 +82,18 @@ export default function CoupleIntroSection() {
             </p>
             <p className="text-base sm:text-lg font-medium" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ffb3c6" }}>
               {weddingData.reception.time}
+            </p>
+          </div>
+
+          <div className="invite-card rounded-2xl p-5 border border-pink-900/30 shadow-lg">
+            <p className="text-sm sm:text-base uppercase tracking-[0.25em] font-bold mb-2" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ff6b9d" }}>
+              {weddingData.muhurtham.tamilTitle} • {weddingData.muhurtham.title}
+            </p>
+            <p className="text-xl sm:text-2xl font-bold mb-1" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ffffff" }}>
+              {weddingData.muhurtham.date}
+            </p>
+            <p className="text-base sm:text-lg font-medium" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#ffb3c6" }}>
+              {weddingData.muhurtham.time}
             </p>
           </div>
         </motion.div>
